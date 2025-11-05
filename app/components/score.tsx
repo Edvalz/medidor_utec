@@ -25,7 +25,7 @@ export default function ScoreBar({ id, group, value, onSave }: ScoreItemProps) {
 
   return (
     <Box sx={{ mt: 7, display: "inline-block", width: "100%" }}>
-      <Typography sx={{ color: "white" }}>{group}</Typography>
+      <Typography sx={{ color: "#5C6B7A" }}>{group}</Typography>
       <LinearProgress
         variant="determinate"
         value={points}
@@ -43,8 +43,8 @@ export default function ScoreBar({ id, group, value, onSave }: ScoreItemProps) {
           variant="standard"
           sx={{
             mt: 4,
-            input: { color: "white" },
-            label: { color: "white" },
+            input: { color: "#5C6B7A" },
+            label: { color: "#5C6B7A" },
           }}
           onChange={(e) => setInputValue(Number(e.target.value))}
         />
