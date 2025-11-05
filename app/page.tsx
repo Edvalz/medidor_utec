@@ -9,6 +9,7 @@ interface Score {
   id: number;
   group_name: string;
   value: number;
+  color: string;
 }
 
 export default function Home() {
@@ -19,7 +20,7 @@ export default function Home() {
       const { data, error } = await supabase
         .from("scores")
         .select("*")
-        .order("id", { ascending: true }); // 👈 aquí ordenamos por id
+        .order("id", { ascending: true });
 
       if (error) {
         console.error("Error al obtener datos:", error);
@@ -40,11 +41,10 @@ export default function Home() {
     if (error) {
       console.error("Error al actualizar:", error);
     } else {
-      setScores(
-        (prev) =>
-          prev
-            .map((s) => (s.id === id ? { ...s, value: newValue } : s))
-            .sort((a, b) => a.id - b.id) // 👈 aseguramos el orden también en memoria
+      setScores((prev) =>
+        prev
+          .map((s) => (s.id === id ? { ...s, value: newValue } : s))
+          .sort((a, b) => a.id - b.id)
       );
     }
   };
@@ -65,6 +65,7 @@ export default function Home() {
           id={score.id}
           group={score.group_name}
           value={score.value}
+          color={score.color}
           onSave={(newVal) => handleSave(score.id, newVal)}
         />
       ))}

@@ -10,17 +10,24 @@ interface ScoreItemProps {
   id: number;
   group: string;
   value: number;
-  onSave: (newValue: number) => void; // 👈 callback que recibe el nuevo valor
+  color: string;
+  onSave: (newValue: number) => void;
 }
 
-export default function ScoreBar({ id, group, value, onSave }: ScoreItemProps) {
+export default function ScoreBar({
+  id,
+  group,
+  value,
+  color,
+  onSave,
+}: ScoreItemProps) {
   const [inputValue, setInputValue] = useState<number>(0);
   const [points, setPoints] = useState<number>(value);
 
   const handleClick = () => {
     const updated = Math.min(points + inputValue, 100);
     setPoints(updated);
-    onSave(updated); // 👈 notificamos al componente padre
+    onSave(updated);
   };
 
   return (
@@ -29,7 +36,12 @@ export default function ScoreBar({ id, group, value, onSave }: ScoreItemProps) {
       <LinearProgress
         variant="determinate"
         value={points}
-        sx={{ height: 50 }}
+        sx={{
+          height: 50,
+          "& .MuiLinearProgress-bar": {
+            backgroundColor: color,
+          },
+        }}
       />
       <Stack
         spacing={2}
