@@ -9,7 +9,7 @@ import { Stack } from "@mui/material";
 interface ScoreItemProps {
   id: number;
   group: string;
-  value: number;
+  value: number; // valor inicial desde BD
   color: string;
   onSave: (newValue: number) => void;
 }
@@ -21,11 +21,15 @@ export default function ScoreBar({
   color,
   onSave,
 }: ScoreItemProps) {
+  const MAX_POINTS = 10000;
+
   const [inputValue, setInputValue] = useState<number>(0);
   const [points, setPoints] = useState<number>(value);
 
+  const percentage = Math.min((points / MAX_POINTS) * 100, 100);
+
   const handleClick = () => {
-    const updated = Math.min(points + inputValue, 100);
+    const updated = Math.min(points + inputValue, MAX_POINTS);
     setPoints(updated);
     onSave(updated);
   };
@@ -33,9 +37,10 @@ export default function ScoreBar({
   return (
     <Box sx={{ mt: 7, display: "inline-block", width: "100%" }}>
       <Typography sx={{ color: "#5C6B7A" }}>{group}</Typography>
+
       <LinearProgress
         variant="determinate"
-        value={points}
+        value={percentage}
         sx={{
           height: 50,
           "& .MuiLinearProgress-bar": {
@@ -43,13 +48,17 @@ export default function ScoreBar({
           },
         }}
       />
+
+      <Typography sx={{ mt: 1, color: "#5C6B7A", textAlign: "right" }}>
+        {points} / {MAX_POINTS}
+      </Typography>
+
       <Stack
         spacing={2}
         direction="row"
         sx={{ mt: 5, justifyContent: "center", alignItems: "center" }}
       >
         <TextField
-          id="standard-basic"
           label="Puntos"
           type="number"
           variant="standard"
@@ -60,6 +69,7 @@ export default function ScoreBar({
           }}
           onChange={(e) => setInputValue(Number(e.target.value))}
         />
+
         <Button variant="contained" onClick={handleClick}>
           Aceptar
         </Button>
