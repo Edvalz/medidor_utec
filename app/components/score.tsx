@@ -9,7 +9,7 @@ import { Stack } from "@mui/material";
 interface ScoreItemProps {
   id: number;
   group: string;
-  value: number; // valor inicial desde BD
+  value: number;
   color: string;
   onSave: (newValue: number) => void;
 }
@@ -43,6 +43,8 @@ export default function ScoreBar({
         value={percentage}
         sx={{
           height: 50,
+          borderRadius: 25,
+          backgroundColor: "#f7cdb9ff",
           "& .MuiLinearProgress-bar": {
             backgroundColor: color,
           },
@@ -70,7 +72,11 @@ export default function ScoreBar({
           onChange={(e) => setInputValue(Number(e.target.value))}
         />
 
-        <Button variant="contained" onClick={handleClick}>
+        <Button
+          variant="contained"
+          onClick={handleClick}
+          sx={{ backgroundColor: "#FF5001" }}
+        >
           Aceptar
         </Button>
       </Stack>
